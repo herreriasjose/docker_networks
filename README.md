@@ -1,5 +1,5 @@
 Docker Networks
-===================
+===============
 
 Most applications today do not run in isolation. They need to communicate with other systems. If we want to run a website, a service or a database inside a Docker container, we first need to understand how to run a service and expose its ports to other applications.
 
@@ -51,4 +51,21 @@ Check the diagram below:
 
 ![alt text](04.jpg)
 
+Container networks
+==================
 
+We have connected to the application running inside the container. In fact, the connection is bidirectional and we could, for example, run *apt install* commands from inside the running Nginx container and the packages would be downloaded from the Internet. How is this possible?
+
+If you check the network interfaces of your machine, you will see that one of the interfaces is called **docker0**:
+
+```bash
+$ ifconfig
+… 
+docker0 Link encap:Ethernet HWaddr 02:42:db:d0:47:db
+inet addr:172.17.0.1 Bcast:0.0.0.0 Mask:255.255.0.0
+…
+```
+
+The **docker0 interface** is created by the **Docker daemon** to connect to containers. We can see which network interfaces are created inside the container by using the *inspect* command.
+
+Let's stop all possible containers and start a new Nginx container.
