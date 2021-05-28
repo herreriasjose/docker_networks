@@ -20,7 +20,9 @@ We can see the logs in the console and we know it is running.
 
 Nginx is a web application server whose user interface is accessible by default through port 80. Therefore, if we were to install Nginx on our machine, we could browse it at http://localhost:80. In our case, however, Nginx is running inside the Docker container.
 
-![alt text](01.jpg)
+<p align="center">
+<img src="03.jpg" width="800">
+</p>
 
 
 This is because Nginx has been started inside the container and we are trying to reach it from the outside. How can we make the running Nginx accessible from the outside?
