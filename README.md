@@ -49,7 +49,9 @@ This simple port mapping is sufficient for many common container use cases. We c
 
 Check the diagram below:
 
-![alt text](04.jpg)
+<p align="center">
+<img src="05.jpg" width="400">
+</p>
 
 Container networks
 ==================
