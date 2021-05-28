@@ -44,3 +44,7 @@ $ docker run -p 80:80  nginx
 After a few seconds Nignx should have started and you should be able to access its welcome page via http://localhost:80:
 
 ![alt text](02.jpg)
+
+This simple port mapping is sufficient for many common container use cases. We can then deploy a large number of services as Docker containers and expose their ports to facilitate communication.
+
+![alt text](04.jpg)
