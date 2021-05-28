@@ -47,4 +47,8 @@ After a few seconds Nignx should have started and you should be able to access i
 
 This simple port mapping is sufficient for many common container use cases. We can then deploy a large number of services as Docker containers and expose their ports to facilitate communication.
 
+Check the diagram below:
+
 ![alt text](04.jpg)
+
+
