@@ -102,7 +102,6 @@ This prints out all the information about the container configuration in JSON fo
                     "MacAddress": "02:42:ac:11:00:02",
                     "DriverOpts": null
                 }
-…
 ```
 
 We can see that the container has an IP of 172.17.0.2 and communicates with the host via IP 172.17.0.1. This means that in our example above, we could access the Nginx server even without port mapping using http://172.17.0.2:80. 
