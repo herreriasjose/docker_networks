@@ -21,7 +21,7 @@ We can see the logs in the console and we know it is running.
 Nginx is a web application server whose user interface is accessible by default through port 80. Therefore, if we were to install Nginx on our machine, we could browse it at http://localhost:80. In our case, however, Nginx is running inside the Docker container.
 
 <p align="center">
-<img src="03.jpg" width="800">
+<img src="./images/03.jpg" width="800">
 </p>
 
 
@@ -43,14 +43,16 @@ $ docker run -p 80:80  nginx
 
 After a few seconds Nignx should have started and you should be able to access its welcome page via http://localhost:80:
 
-![alt text](02.jpg)
+<p align="center">
+<img src="./images/02.jpg" width="800">
+</p>
 
 This simple port mapping is sufficient for many common container use cases. We can then deploy a large number of services as Docker containers and expose their ports to facilitate communication.
 
 Check the diagram below:
 
 <p align="center">
-<img src="06.png" width="400">
+<img src="./images/06.png" width="400">
 </p>
 
 Container networks
@@ -107,7 +109,7 @@ This prints out all the information about the container configuration in JSON fo
 We can see that the container has an IP of 172.17.0.2 and communicates with the host via IP 172.17.0.1. This means that in our example above, we could access the Nginx server even without port mapping using http://172.17.0.2:80. 
 
 <p align="center">
-<img src="07.png" width="800">
+<img src="./images/07.png" width="800">
 </p>
 &nbsp;&nbsp;
  
@@ -115,3 +117,6 @@ We can see that the container has an IP of 172.17.0.2 and communicates with the 
 
 Docker networks in more detail
 ==============================
+
+
+TODO
