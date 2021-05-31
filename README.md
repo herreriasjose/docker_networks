@@ -202,3 +202,62 @@ Among other interfaces, there is a *veth* (Virtual Ethernet Interface) that conn
 <p align="center">
 <img src="./images/08.png" width="400">
 </p>
+
+
+All traffic will flow through the eth0 interface and then be routed to the respective containers via docker0. 
+
+Let's see how the containers communicate with each other over a bridge network. To do so, let's create two containers:
+
+```bash
+$ docker run -dit --name container_1 ubuntu
+$ docker run -dit --name container_2 ubuntu
+```
+
+If we now inspect the bridge network, we will see that there is a section called Containers where we can see the two we have running:
+
+```bash
+$ docker network inspect bridge
+```
+
+```json
+...
+        "Containers": {
+            "025f6cdac52aaef9bf10c38f870fc5597cc848ac76487cdd36aff8da8321fe30": {
+                "Name": "container_2",
+                "EndpointID": "3ca4207329947cc9ada99cb1e99d75af2a97700882b09fb6c46b521bbee32b95",
+                "MacAddress": "02:42:ac:11:00:04",
+                "IPv4Address": "172.17.0.4/16",
+                "IPv6Address": ""
+            },
+            "cf2d53fead4200cc4e0e5e27673f1bfc659978a21be9db3187bfc6593fa388ef": {
+                "Name": "container_1",
+                "EndpointID": "c627760c506cfee73a53514dfa34de113d2aa691e3c229336c525b0089ef8b68",
+                "MacAddress": "02:42:ac:11:00:03",
+                "IPv4Address": "172.17.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": ...
+```
+
+As you can see, there are the two containers, with IPs 172.17.0.4 and 172.17.0.3, which indicates that they are in the same range and could communicate with each other. 
+Try sending a ping from **container_1** to **container_2**:
+
+```bash
+$ docker attach container_1
+root@cf2d53fead42:/# ping -c 2 172.17.0.4
+```
+
+And the result should be something like:
+
+```bash
+PING 172.17.0.3 (172.17.0.4): 56 data bytes
+64 bytes from 172.17.0.4: seq=0 ttl=64 time=0.723 ms
+64 bytes from 172.17.0.4: seq=1 ttl=64 time=0.069 ms
+
+--- 172.17.0.4 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.069/0.396/0.723 ms
+```
+
+TODO
