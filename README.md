@@ -260,4 +260,54 @@ PING 172.17.0.3 (172.17.0.4): 56 data bytes
 round-trip min/avg/max = 0.069/0.396/0.723 ms
 ```
 
-TODO
+However, each time we create this container this IP can be different, as these IPs are not reserved for containers at all. This can be a problem if several containers communicate with each other and we want to add this information as part of our application. 
+
+Docker allows us to communicate containers via their name rather than their IP. However, in this default generated bridge network it is not possible to use this mechanism. In fact, if we try it we will see that the containers in this network are not recognised by name:
+ 
+```bash
+root@cf2d53fead42:/# ping -c 2 container_2
+ping: bad address 'container_2'
+```
+
+To do so, we must create our own networks.
+
+How to create our own networks
+==============================
+
+Creating a network in Docker is as simple as:
+
+```bash
+$ docker network create my_bridge
+97ac278b6d1ad67d116bc60c355dca81f1a7b6e22cfc7730252def6dd3b6eb79
+```
+
+Once created, if you go back to the list of available networks on your host, you will see that you have a new one, called **my_bridge**, which uses the bridge driver.
+
+```bash
+$ docker network ls
+NETWORK ID     NAME         DRIVER    SCOPE
+5400f00b0ff6   bridge       bridge    local
+b8091a21ae4c   host         host      local
+97ac278b6d1a   my_bridge    bridge    local
+84b2f783c5d0   none         null      local
+```
+
+Let's create now two ubuntu containers, named **container_a** and **container_b** inside the network we just created. Finally let's ping from one of them to the other using their names.
+
+```bash
+$ docker container run -dit --name container_a --network my_bridge ubuntu
+$ docker container run -dit --name container_b --network my_bridge ubuntu
+$ docker attach container_b
+root@ecd6265aafd0:/# ping -c 3 container_a
+PING container_a (172.18.0.2): 56 data bytes
+64 bytes from 172.18.0.2: seq=0 ttl=64 time=0.131 ms
+64 bytes from 172.18.0.2: seq=1 ttl=64 time=0.106 ms
+64 bytes from 172.18.0.2: seq=2 ttl=64 time=0.118 ms
+
+--- container_a ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 0.106/0.118/0.131 ms
+/ #
+```
+
+Docker uses a DNS server configured for each container that allows them to resolve the name of the other containers with which they share a network.
