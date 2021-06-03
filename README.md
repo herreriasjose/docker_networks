@@ -311,3 +311,26 @@ round-trip min/avg/max = 0.106/0.118/0.131 ms
 ```
 
 Docker uses a DNS server configured for each container that allows them to resolve the name of the other containers with which they share a network.
+
+
+Host
+====
+
+Another network listed on your local machine is called host. What this network does is to remove the isolation between the host and the containers, so a container does not receive its own IP, as we saw in the previous examples, but uses the host's IP. Therefore, if you run a container associated with this network listening on port 80, the container's application will be available through port 80 of the host's IP.
+
+```bash
+$ docker run -d --network host nginx
+```
+
+To check that it works, let's try to access directly through port 80 of the host.
+
+<p align="center">
+<img src="./images/09.png" width="800">
+</p>
+
+But why would we want to do that? We could use it in case we are trying to debug or analyse the traffic flowing through the host network.
+
+None
+====
+
+TODO
