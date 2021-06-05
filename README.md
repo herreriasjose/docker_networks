@@ -52,7 +52,7 @@ This simple port mapping is sufficient for many common container use cases. We c
 Check the diagram below:
 
 <p align="center">
-<img src="./images/06.png" width="400">
+<img src="./images/06g.png" width="400">
 </p>
 
 Container networks
