@@ -200,7 +200,7 @@ $ ip addr
 Among other interfaces, there is a *veth* (Virtual Ethernet Interface) that connects the container to **docker0** and has the name **vethf8eafcc@if5**. The other end of **docker0** is connected to the host system on **eth0**.  The diagram of how the network works so far is as follows:
 
 <p align="center">
-<img src="./images/08.png" width="400">
+<img src="./images/08g.png" width="400">
 </p>
 
 
