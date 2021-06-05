@@ -333,4 +333,61 @@ But why would we want to do that? We could use it in case we are trying to debug
 None
 ====
 
-TODO
+In case we want a container to have no network assigned to it, we will use --network none as in the following example:
+
+```bash
+$ docker run -dit --network none ubuntu bash
+98005a17c9ecf6298c4f3c378d1f44932443ce98c64a4b9441e209e7070c2424
+```
+
+
+This container will be completely isolated from the outside world, and applications running inside the container will be isolated from anywhere outside the container.
+
+If you now check the networks assigned to this container, you will see that there are no values for IPAddress and Gateway.
+
+
+```bash
+$ docker inspect 9800
+ ...
+ "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "79666cd48e4a29b19dbc74f44aec690215f582db84c786ca70b94fa5c3f98ada",
+                    "EndpointID": "2997b3df16b999b8b64b767a8a1f89e6af2d76c453b744365b55c7079ec78ac5",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "",
+                    "DriverOpts": null
+                }
+            }
+```
+
+How to connect a container to two networks
+==========================================
+
+One question that may arise from this example is: can a container be connected to more than one network? The answer is yes, and it is very easy to do so. However, during creation it is only possible to connect to a single network. To connect to a second, third, and so on, you need to connect to an already running container via the *network connect* command:
+
+```bash
+$ docker network connect my_bridge container_1
+```
+
+If you have been running all the examples, now **container_1**, which was originally only on the default network, called **bridge**, now also belongs to the network called **my_bridge**, so it could communicate with both **container_a** and **container_b**:
+
+```bash
+$ docker attach container_1
+ping -c 2 container_a
+...
+ping -c 2 container_b
+...
+```
+
+Port mapping
+============
+
+*TODO*
