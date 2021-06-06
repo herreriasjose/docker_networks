@@ -390,4 +390,37 @@ ping -c 2 container_b
 Port mapping
 ============
 
-*TODO*
+Usually the outside world needs to communicate with the container, and can only do so when it passes through a host port. Therefore, the host port needs to be mapped to a port in the container. 
+
+If we have followed the above sections we will have a number of containers running by now. Let's stop and delete them.
+
+```bash
+$ docker stop $(docker ps -a -q)
+$ docker container prune
+```
+
+And now we are going to run 2 containers: an Nginx server and an Apache server. 
+
+```bash
+$ docker run -d -p 80:80 nginx
+a5e67277a8e84441506af7367217f3c12804b388ee2027664a6e38115315c2b4
+```
+
+<p align="center">
+<img src="./images/10.png" width="800">
+</p>
+
+```bash
+$ docker run -d -p 81:80 httpd
+8c9cc29fdcede03e9cc082183fd67244d35d926addaa8bac10c3becb6cd7f530
+```
+
+<p align="center">
+<img src="./images/11.png" width="800">
+</p>
+
+We can get an idea of how these 2 servers are working by looking at the following diagram:
+
+<p align="center">
+<img src="./images/12.png" width="400">
+</p>
