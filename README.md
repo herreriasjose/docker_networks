@@ -424,3 +424,19 @@ We can get an idea of how these 2 servers are working by looking at the followin
 <p align="center">
 <img src="./images/12g.png" width="600">
 </p>
+
+
+We see that port 80 of the host is mapped to port 80 of the container while port 81 of the host is mapped to port 80 of the other container. 
+
+In this way all external traffic is routed through a host port to a container port to create a connection. Remember, however, that none of this is necessary in the reverse direction when the containers want to communicate with the outside world. 
+
+
+Use of the -P and -p flags
+--------------------------
+
+By default, if you use the docker run or docker create command to run or create a container, it does not make any ports of that container accessible from the outside. So, while it is possible for your Docker containers to connect to the outside world without making any changes to your code, it is not possible for the outside world to connect to your Docker containers.
+
+If you want to override this default behaviour, you can use the -P or -p flag in your Docker runchain. Port publishing produces a firewall rule that binds a container port to a port on the Docker host, ensuring that the ports are accessible to any client that can communicate with the host.  
+
+This is what makes a port accessible to Docker containers that are not connected to the container network, or to services that are outside your Docker environment.
+ 
