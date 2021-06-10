@@ -440,3 +440,55 @@ If you want to override this default behaviour, you can use the -P or -p flag in
 
 This is what makes a port accessible to Docker containers that are not connected to the container network, or to services that are outside your Docker environment.
  
+There are therefore two ways to publish ports in Docker:
+
+■ Using the -P flag
+■ Using the -p flag
+
+Using the -P flag
+-----------------
+
+Using the -P flag allows you to publish all ports exposed by a container to random ports on host interfaces. It is short for -publish-all.
+
+Let's try an example:
+
+```bash
+$ docker run -d -P nginx
+9fa6fe923e9190d5e18ce90282207b420fa9e2ac390186c6b89506d8fd306a18
+$ docker port 9fa6
+80/tcp -> 0.0.0.0:49153
+```
+
+We see that port 80 has been automatically published to a random port, in this case 49153. 
+
+<p align="center">
+<img src="./images/13.png" width="800">
+</p>
+
+Using the -p flag
+-----------------
+
+Using the -p flag (lowercase) at runtime allows you to publish a specific port(s) of a container to the Docker host. It is short for -publish. 
+It allows you to assign the port of a container or a range of ports to the host explicitly, instead of exposing all ports of the container.
+
+Basically it is used like this:
+
+```bash
+ $ docker run -d -p 8080:80 nginx
+b965c931e78c668fb1673cfc06b88b9112d0283f72d0f692ea103e4caf6ff85e
+```
+
+<p align="center">
+<img src="./images/14.png" width="800">
+</p>
+
+Remember that each of the publishing rules uses TCP by default. If you need to use UDP, you will have to specify it. For example:
+
+```bash
+$ docker run -d -p 5005:5005/udp mendhak/udp-listener
+```
+
+Exposing ports
+==============
+
+**TODO**
