@@ -491,4 +491,20 @@ $ docker run -d -p 5005:5005/udp mendhak/udp-listener
 Exposing ports
 ==============
 
+We have seen in the previous sections how to publish ports in Docker. But there is another mechanism in Docker related to ports, which is to expose ports.
+
+You expose ports by using the EXPOSE keyword in the Dockerfile or the --expose flag on the command line. Exposing ports is a way to document which ports are used, but it does not actually assign or open any ports. Port exposure is optional.
+
+So, the first thing to understand is that exposing ports is a documentation mechanism that in principle only informs which ports will be used by the container. According to the Docker documentation: *"It functions as a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published."*
+
+Using EXPOSE in the Dockerfile
+------------------------------
+
+If we consult, for example, the Dockerfile of the <a href="https://github.com/nginxinc/docker-nginx/blob/master/Dockerfile-debian.template">official Nginx image</a> we will see that one of its lines includes the following statement:
+
+
+```bash
+EXPOSE 80
+```
+
 **TODO**
