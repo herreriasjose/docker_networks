@@ -422,7 +422,7 @@ $ docker run -d -p 81:80 httpd
 We can get an idea of how these 2 servers are working by looking at the following diagram:
 
 <p align="center">
-<img src="./images/12g.png" width="600">
+<img src="./images/12gl.png" width="600">
 </p>
 
 
