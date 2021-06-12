@@ -507,4 +507,48 @@ If we consult, for example, the Dockerfile of the <a href="https://github.com/ng
 EXPOSE 80
 ```
 
+This does not set any network properties. It just "documents" which port(s) the service listens on.
+This information can be checked with an *ls* of the docker container. The exposed port will be in the *PORTS column*. And we can also find it available when inspecting a container.
+
+Let's do a couple of tests. Let's run a container like this:
+
+```bash
+$ docker run -d --name nginx1 nginx
+a8fd9de9d5cfd913425e565ef0d1b92d0d1c6684f4cb09c272c3c915ea1c78b3
+```
+
+Let's see what Docker tells us about it. First by using *ls*...
+
+```bash
+$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS     NAMES
+a8fd9de9d5cf   nginx     "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    nginx1
+```
+
+And then inspecting it:
+
+```bash
+$ docker inspect a8fd
+...
+"ExposedPorts": {
+                "80/tcp": {}
+            }, ...
+```
+
+If we try to access the container, we will see that it is not possible:
+
+<p align="center">
+<img src="./images/15.png" width="800">
+</p>
+
+Again: exposing a port only documents which ports are served, it does not publish them.
+
+You can expose multiple ports in this way:
+
+```bash
+EXPOSE 80
+EXPOSE 3000
+EXPOSE 8080
+```
+
 **TODO**
