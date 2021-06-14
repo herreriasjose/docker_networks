@@ -493,7 +493,7 @@ Exposing ports
 
 We have seen in the previous sections how to publish ports in Docker. But there is another mechanism in Docker related to ports, which is to expose ports.
 
-You expose ports by using the EXPOSE keyword in the Dockerfile or the --expose flag on the command line. Exposing ports is a way to document which ports are used, but it does not actually assign or open any ports. Port exposure is optional.
+You expose ports by using the **EXPOSE keyword** in the Dockerfile or the **--expose flag** on the command line. Exposing ports is a way to document which ports are used, but it does not actually assign or open any ports. Port exposure is optional.
 
 So, the first thing to understand is that exposing ports is a documentation mechanism that in principle only informs which ports will be used by the container. According to the Docker documentation: *"It functions as a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published."*
 
@@ -550,5 +550,43 @@ EXPOSE 80
 EXPOSE 3000
 EXPOSE 8080
 ```
+
+By default, the EXPOSE keyword specifies that the port listens on the TCP protocol.  If you want to expose a UDP port you would add something like this:
+
+```bash
+EXPOSE 37/udp
+```
+
+Using the --expose flag
+-----------------------
+
+Let's eliminate all containers:
+
+```bash
+$ docker stop $(docker ps -q -a)
+```
+
+Let's start a new container in this way:
+
+```bash
+$ docker run -d --name nginx2 --expose=8080 nginx
+6add94a7fee5626921ff9f153dc3c361cea6502c976690ff1bbf8847b4d08dea
+```
+
+And let's take a look at its ports:
+
+```bash
+$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS              NAMES
+6add94a7fee5   nginx     "/docker-entrypoint.…"   7 seconds ago   Up 6 seconds   80/tcp, 8080/tcp   nginx2
+```
+
+We see that it has 2 ports exposed: port 80 (via the Dockerfile) and port 8080 that we just exposed. Which port could we now connect to the container through the host?
+
+<p align="center">
+<img src="./images/16.png" width="800">
+</p>
+
+Well, from none. Neither using 80 nor using 8080. Once again: exposing a port is not the same as publishing it.
 
 **TODO**
