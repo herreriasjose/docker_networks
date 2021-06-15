@@ -589,4 +589,30 @@ We see that it has 2 ports exposed: port 80 (via the Dockerfile) and port 8080 t
 
 Well, from none. Neither using 80 nor using 8080. Once again: exposing a port is not the same as publishing it.
 
+Remember also that the use of the flag is additive, which means that it will expose additional ports along with those indicated by the EXPOSE keyword. And that, in addition, you can provide a range of ports as an argument: 
+
+```bash
+$ docker run --expose=8080-8085 nginx
+```
+
+Exhibiting and publishing in practice
+=====================================
+
+To fully understand the difference between exposing a port and publishing it, let's delete all the containers again and start a new one in this way:
+
+```bash
+$ docker run -d --name nginx3 --expose=8080 -p 3000:80  nginx
+1641b5669a71baf7cd84d8ca61fadf7134f12192db8b9b753b2f3942d582900f
+```
+
+Let's see now its ports exposed and published.
+
+```bash
+$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                            NAMES
+1641b5669a71   nginx     "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   8080/tcp, 0.0.0.0:3000->80/tcp   nginx3
+```
+
+According to the information we see, on which port will we be able to connect to the service provided by the container?
+
 **TODO**
