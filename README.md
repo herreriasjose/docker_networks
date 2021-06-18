@@ -615,4 +615,9 @@ CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        
 
 According to the information we see, on which port will we be able to connect to the service provided by the container?
 
-**TODO**
+<p align="center">
+<img src="./images/17.png" width="800">
+</p>
+
+
+Indeed: through 3000. The only one we have published via the *-p* flag.
